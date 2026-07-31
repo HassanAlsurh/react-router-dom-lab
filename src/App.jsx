@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import MailboxesList from './pages/MailboxesList'
 import CreateMailbox from './pages/CreateMailbox'
 import MailboxDetails from './pages/MailboxDetails'
+import LetterForm from './pages/LetterForm'
 
 
 
@@ -18,8 +19,9 @@ const App = () => {
   const { Title } = Typography
 
   const [mailboxes, setMailboxes] = useState([])
+  const [letters, setLetters] = useState([])
 
-  const handleAddMailbox =  (newMailboxData) => {
+  const handleAddMailbox = async (newMailboxData) => {
     try {
       const newId = mailboxes.length + 1
       const newMailbox =  {
@@ -27,9 +29,25 @@ const App = () => {
         ...newMailboxData
       }
       
-      setMailboxes([...mailboxes, newMailbox])
+      await setMailboxes([...mailboxes, newMailbox])
       
-      console.log(mailboxes);
+      console.log('Mailboxes (After): ',mailboxes);
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleAddLetter = async (newLetterData) => {
+    try {
+      const newLetter =  {
+        _id: crypto.randomUUID(),
+        ...newLetterData
+      }
+      
+      await setLetters([...letters, newLetter])
+      
+      console.log('Letters (After): ',letters);
       
     } catch (error) {
       console.log(error)
@@ -42,7 +60,7 @@ const App = () => {
       <Header className="site-header">
         <div className="header-inner">
           <Title level={2} className="site-title">
-            Mailbox Directory
+            Post Office
           </Title>
           <NavBar />
         </div>
@@ -64,10 +82,14 @@ const App = () => {
             path="/mailboxes/new"
             element={< CreateMailbox handleAddMailbox={handleAddMailbox} mailboxes={mailboxes}/>}
           />
+          <Route
+            path="/mailboxes/newletter"
+            element={< LetterForm handleAddLetter={handleAddLetter} letters={letters} mailboxes={mailboxes} />}
+          />
 
           <Route
             path="/mailboxes/:mailboxId"
-            element={< MailboxDetails mailboxes={mailboxes} />}
+            element={< MailboxDetails mailboxes={mailboxes} letters={letters} />}
           />
 
 

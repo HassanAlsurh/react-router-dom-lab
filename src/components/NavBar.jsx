@@ -15,6 +15,9 @@ const NavBar = () => {
         <Link to="/mailboxes/new">
           <Button type="primary">New Mailbox</Button>
         </Link>
+        <Link to="/mailboxes/newletter">
+          <Button type="primary">New Letter</Button>
+        </Link>
       </Space>
     </nav>
   )

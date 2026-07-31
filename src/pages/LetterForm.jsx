@@ -1,28 +1,27 @@
 import { useState } from 'react'
 import { Alert, Button, Card, Form, Input, Select } from 'antd'
 import { useNavigate } from 'react-router'
+const { TextArea } = Input;
 
-
-const CreateMailbox = (props) => {
+const LetterForm = (props) => {
     const [form] = Form.useForm()
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
 
-    const selectOptions = [
-        { value: 'small', label: 'Small' },
-        { value: 'medium', label: 'Medium' },
-        { value: 'large', label: 'Large' },
-    ]
+    const selectOptions = props.mailboxes.map((mailbox) => ({
+        value: mailbox._id,
+        label: `Mailbox ${mailbox._id}`,
+    }));
 
     const handleFinish = async (values) => {
-        console.log('Mailbox (before): ',props.mailboxes);
-        console.log('Values of Form: ',values);
+        console.log('letters (before): ', props.letters);
+        console.log('Values of Form: ', values);
         setIsSubmitting(true)
         setErrorMessage('')
 
         try {
-            await props.handleAddMailbox(values)
+            await props.handleAddLetter(values)
             form.resetFields()
             navigate('/mailboxes')
         } catch (error) {
@@ -33,13 +32,13 @@ const CreateMailbox = (props) => {
     }
 
     return (
-        <Card title="New Mailbox" className="form-card">
+        <Card title="New Letter" className="form-card">
 
             {errorMessage && (
                 <Alert
                     type="error"
                     showIcon
-                    title="Mailbox could not be added"
+                    title="Letter could not be sent"
                     description={errorMessage}
                     className="form-alert"
                 />
@@ -51,20 +50,39 @@ const CreateMailbox = (props) => {
                 onFinish={handleFinish}
                 initialValues={
                     {
-                        boxOwner: undefined,
-                        boxSize: undefined,
+                        mailBox: undefined,
+                        recipient: undefined,
+                        message: undefined,
                     }
                 }
             >
 
+
                 <Form.Item
-                    label="Enter a Boxholder"
-                    name="boxOwner"
+                    name="mailBox"
+                    label="Mailbox"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please select a mailbox!'
+                        }
+                    ]}
+                >
+                    <Select
+                        placeholder="Select a Mailbox"
+                        allowClear
+                        options={selectOptions}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    label="Recipient"
+                    name="recipient"
                     rules={[
                         {
                             required: true,
                             whitespace: true,
-                            message: 'Please enter a boxholder name',
+                            message: 'Please enter the recipient name',
                         },
                         {
                             min: 2,
@@ -72,26 +90,30 @@ const CreateMailbox = (props) => {
                         },
                     ]}
                 >
-                    <Input placeholder="Boxholder name" />
+                    <Input placeholder="Recipient name" />
                 </Form.Item>
 
+
+
                 <Form.Item
-                    name="boxSize"
-                    label="mailbox Size"
+                    label="Message"
+                    name="message"
                     rules={[
                         {
                             required: true,
-                            whitespace: true,
-                            message: 'Please select a mailbox size!'
+                            message: 'Please provide a message!'
                         }
                     ]}
-                >
-                    <Select
-                        placeholder="Select a Box Size"
-                        allowClear
-                        options={selectOptions}
+                    >
+                    <TextArea
+                        placeholder="Message..."
+                        autoSize={{ minRows: 3, maxRows: 6 }}
+                        showCount
+                        maxLength={500}
                     />
                 </Form.Item>
+
+
 
                 <Button
                     type="primary"
@@ -108,4 +130,4 @@ const CreateMailbox = (props) => {
     )
 }
 
-export default CreateMailbox
+export default LetterForm
