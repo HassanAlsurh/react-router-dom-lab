@@ -32,7 +32,7 @@ const LetterForm = (props) => {
     }
 
     return (
-        <Card title="New Letter" className="form-card">
+        <Card title="New Letter" className="form-card" style={{ maxWidth: '600px', margin: '0 auto', marginTop: '40px' }}>
 
             {errorMessage && (
                 <Alert

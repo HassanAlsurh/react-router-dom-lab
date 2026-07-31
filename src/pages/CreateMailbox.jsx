@@ -33,7 +33,7 @@ const CreateMailbox = (props) => {
     }
 
     return (
-        <Card title="New Mailbox" className="form-card">
+        <Card title="New Mailbox" className="form-card" style={{ maxWidth: '600px', margin: '0 auto', marginTop: '40px' }}>
 
             {errorMessage && (
                 <Alert
