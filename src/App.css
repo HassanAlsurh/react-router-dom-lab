@@ -1,15 +1,19 @@
 .app-layout {
   min-height: 100vh;
+  background-color: #f5f5f5;
 }
 
 .site-header {
   height: auto;
   padding: 16px 24px;
+  background-color: #001529 !important; /* Ant Design dark navy */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Drop shadow to separate header from content */
+  z-index: 10;
 }
 
 .header-inner {
   width: 100%;
-  max-width: 960px;
+  max-width: 1200px; /* Widened slightly to give your card grid more room */
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -19,24 +23,31 @@
 }
 
 .site-title.ant-typography {
-  color: white;
+  color: #ffffff;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 
+/* Polishing the Nav Buttons for the Dark Header */
 .nav-button.ant-btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: white;
+  transition: all 0.3s ease;
 }
 
 .nav-button.ant-btn:hover {
   color: white !important;
-  background: rgba(255, 255, 255, 0.15) !important;
+  background: #1677ff !important; /* Vibrant blue on hover */
+  border-color: #1677ff !important;
 }
 
 .site-content {
   width: 100%;
-  max-width: 960px;
+  max-width: 1200px; /* Matches the header max-width */
   margin: 0 auto;
-  padding: 32px 24px;
+  padding: 40px 24px;
 }
 
 .page-center {
@@ -45,8 +56,13 @@
   place-items: center;
 }
 
+/* Elevates your form cards off the page with a soft shadow */
 .form-card {
   max-width: 600px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 8px; 
+  border: none;
 }
 
 .form-alert {
